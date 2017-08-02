@@ -4,7 +4,7 @@ using System.IO.Ports;
 
 namespace Volumecontrol
 {
-    class Program
+    class volumeControlClient
     {
         int maxVolume = 65535;
 
@@ -44,6 +44,7 @@ namespace Volumecontrol
         }
 
         public string getInput(SerialPort serialport){
+            //reading string from serial and returning it
             try{
                 string output = serialport.ReadLine();
                 return output;
@@ -56,7 +57,7 @@ namespace Volumecontrol
 
         static void Main(string[] args)
         {
-            Program volume = new Program();
+            volumeControlClient volume = new volumeControlClient();
             SerialPort sp = volume.connectSerial("COM5");
             while(true){
                 volume.setVolume(volume.getInput(sp),20);
