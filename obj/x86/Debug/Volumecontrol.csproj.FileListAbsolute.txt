@@ -1,0 +1,5 @@
+E:\Documents\Volumecontrol\bin\Debug\WindowsApplication.exe
+E:\Documents\Volumecontrol\bin\Debug\WindowsApplication.pdb
+E:\Documents\Volumecontrol\obj\x86\Debug\Volumecontrol.csproj.CoreCompileInputs.cache
+E:\Documents\Volumecontrol\obj\x86\Debug\WindowsApplication.exe
+E:\Documents\Volumecontrol\obj\x86\Debug\WindowsApplication.pdb
