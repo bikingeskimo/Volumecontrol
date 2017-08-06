@@ -34,5 +34,5 @@ void loop() {
     }
       lastState1 = buttonState1;
       lastState2 = buttonState2;
-      delay(10);
+      delay(5);
 }

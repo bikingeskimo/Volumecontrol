@@ -1,69 +1,97 @@
 ﻿using System;
 using System.IO.Ports;
 
-
 namespace Volumecontrol
 {
     class volumeControlClient
     {
         int maxVolume = 65535;
         string controllerNumber;
+        SerialPort serialport;
 
-        public volumeControlClient(string controllerNumber){
-            this.controllerNumber = controllerNumber;
-        }
-
-        //adjusting volume up or down by 65535(max)/number of buttonpresses needed to go from 0-100
-        public void setApplicationVolume(string value, double steps, string applicationName, bool focused = false){
-            System.Diagnostics.Process volumeProcess = new System.Diagnostics.Process();
-            volumeProcess.StartInfo.FileName = "nircmd.exe";
-            if (value.Equals(controllerNumber))
-            {
-                volumeProcess.StartInfo.Arguments = ("changeappvolume " + applicationName + " " + 1/steps).ToString();
-                System.Console.WriteLine("Appvolume changed " + 1/steps);
-                volumeProcess.Start();
-                volumeProcess.WaitForExit();
-
-            }
-            if (value.Equals("-" + controllerNumber))
-            {
-                volumeProcess.StartInfo.Arguments = ("changeappvolume " + applicationName + " " + -1/steps).ToString();
-                System.Console.WriteLine("Appvolume changed " + -1/steps);
-                volumeProcess.Start();
-                volumeProcess.WaitForExit();
-            }
-        }
-        public void setVolume(string value, int steps)
+        public volumeControlClient(string controllerNumber, SerialPort serialport)
         {
-            System.Diagnostics.Process volumeProcess = new System.Diagnostics.Process();
-            volumeProcess.StartInfo.FileName = "nircmd.exe";
-            if (value.Equals("1"))
-            {
-                volumeProcess.StartInfo.Arguments = ("changesysvolume " + maxVolume / steps).ToString();
-                System.Console.WriteLine("Volumchange " + maxVolume / steps);
-                volumeProcess.Start();
-                volumeProcess.WaitForExit();
+            this.controllerNumber = controllerNumber;
+            System.Console.WriteLine(controllerNumber);
+            this.serialport = serialport;
+        }
 
-            }
-            if (value.Equals("-1"))
+
+        public void startProcess(string input, string command, double steps = 0, string applicationName = "", bool focused = false)
+        {
+            if (input.Contains(controllerNumber))
             {
-                volumeProcess.StartInfo.Arguments = ("changesysvolume " + -maxVolume / steps).ToString();
-                System.Console.WriteLine("Volumchange " + -maxVolume / steps);
-                volumeProcess.Start();
-                volumeProcess.WaitForExit();
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = "nircmd.exe";
+
+                try
+                {
+                    int value;
+
+                    if (Int32.TryParse(input, out value) && value < 0)
+                    {
+                        steps = -steps;
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.Console.WriteLine(e);
+                }
+                string focusedString = "";
+                //check if volume should go up or down (up is positive change up, and negative is steps down)
+
+                if (focused == true)
+                {
+                    focusedString = "focused";
+                }
+
+                process.StartInfo.Arguments = (command + " " + applicationName + steps + " " + focusedString).ToString();
+                process.Start();
+                process.WaitForExit();
             }
 
         }
 
+        public void changeApplicationVolume(string input,double steps, string applicationName = "", bool focused = false)
+        {
+
+            steps = 1 / steps;
+            startProcess(input,"changeappvolume ", steps, applicationName + " ", focused);
+            System.Console.WriteLine("Changed application volume: " + steps);
+
+        }
+
+        public void changeSystemVolume(string input, int steps)
+        {
+
+            steps = maxVolume / steps;
+            startProcess(input, "changesysvolume", steps);
+            System.Console.WriteLine("Changed system volume: " + steps);
+
+        }
+
+        public void muteSystemVolume(string input)
+        {
+            startProcess(input,"mutesysvolume 2");
+            System.Console.WriteLine("muting system audio");
+        }
+
+        public void muteApplicationVolume(string input, string applicationName)
+        {
+            startProcess(input, "muteappvolume", 0, applicationName, true);
+            System.Console.WriteLine("muting application");
+        }
+
+        //Connect to serialport 
         public SerialPort connectSerial(string portName)
         {
             //starting and opening serial port
             try
             {
                 SerialPort serialport = new SerialPort(portName);
-                System.Console.WriteLine("Connected to: " + portName);
                 serialport.BaudRate = 9600;
                 serialport.Open();
+                System.Console.WriteLine("Connected to: " + portName);
                 return serialport;
             }
             catch (Exception e)
@@ -71,9 +99,10 @@ namespace Volumecontrol
                 System.Console.WriteLine(e);
                 return null;
             }
+
         }
 
-        public string getInput(SerialPort serialport)
+        public string readInput(SerialPort serialport)
         {
             //reading string from serial and returning it
             try
@@ -90,13 +119,31 @@ namespace Volumecontrol
 
         static void Main(string[] args)
         {
-            volumeControlClient volume = new volumeControlClient("1");
-            SerialPort sp = volume.connectSerial("COM5");
-            while (true)
+            try
             {
-                //volume.setVolume(volume.getInput(sp), 20);
-                volume.setApplicationVolume(volume.getInput(sp), 5,"spotify.exe");
+                SerialPort serialport = new SerialPort("COM5", 9600);
+                serialport.Open();
+                volumeControlClient volume = new volumeControlClient("1", serialport);
+                volumeControlClient vol2 = new volumeControlClient("2", serialport);
+
+                string input;
+
+                while (true)
+                {
+                    input = serialport.ReadLine();
+                    System.Console.WriteLine("Input: " + input);
+                    volume.changeApplicationVolume(input,10, "spotify.exe");
+                    vol2.changeSystemVolume(input,10);
+                }
             }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e);
+            }
+
+
+
+
         }
     }
 }
