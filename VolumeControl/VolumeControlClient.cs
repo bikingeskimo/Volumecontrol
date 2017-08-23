@@ -132,7 +132,7 @@ namespace Volumecontrol
                 {
                     input = serialport.ReadLine();
                     System.Console.WriteLine("Input: " + input);
-                    volume.changeApplicationVolume(input, 10, "spotify.exe");
+                    volume.changeApplicationVolume(input, 10, "chrome.exe");
                     vol2.changeSystemVolume(input, 10);
                 }
             }
