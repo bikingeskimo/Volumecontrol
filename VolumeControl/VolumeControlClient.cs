@@ -52,11 +52,11 @@ namespace Volumecontrol
 
         }
 
-        public void changeApplicationVolume(string input,double steps, string applicationName = "", bool focused = false)
+        public void changeApplicationVolume(string input, double steps, string applicationName = "", bool focused = false)
         {
 
             steps = 1 / steps;
-            startProcess(input,"changeappvolume ", steps, applicationName + " ", focused);
+            startProcess(input, "changeappvolume ", steps, applicationName + " ", focused);
             System.Console.WriteLine("Changed application volume: " + steps);
 
         }
@@ -72,7 +72,7 @@ namespace Volumecontrol
 
         public void muteSystemVolume(string input)
         {
-            startProcess(input,"mutesysvolume 2");
+            startProcess(input, "mutesysvolume 2");
             System.Console.WriteLine("muting system audio");
         }
 
@@ -89,7 +89,7 @@ namespace Volumecontrol
             try
             {
                 SerialPort serialport = new SerialPort(portName);
-                serialport.BaudRate = 9600;
+                serialport.BaudRate = 115200;
                 serialport.Open();
                 System.Console.WriteLine("Connected to: " + portName);
                 return serialport;
@@ -121,7 +121,7 @@ namespace Volumecontrol
         {
             try
             {
-                SerialPort serialport = new SerialPort("COM5", 9600);
+                SerialPort serialport = new SerialPort("COM6", 115200);
                 serialport.Open();
                 volumeControlClient volume = new volumeControlClient("1", serialport);
                 volumeControlClient vol2 = new volumeControlClient("2", serialport);
@@ -132,8 +132,8 @@ namespace Volumecontrol
                 {
                     input = serialport.ReadLine();
                     System.Console.WriteLine("Input: " + input);
-                    volume.changeApplicationVolume(input,10, "spotify.exe");
-                    vol2.changeSystemVolume(input,10);
+                    volume.changeApplicationVolume(input, 10, "spotify.exe");
+                    vol2.changeSystemVolume(input, 10);
                 }
             }
             catch (Exception e)
