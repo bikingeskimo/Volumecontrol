@@ -117,33 +117,33 @@ namespace Volumecontrol
 
         }
 
-        static void Main(string[] args)
-        {
-            try
-            {
-                SerialPort serialport = new SerialPort("COM6", 115200);
-                serialport.Open();
-                volumeControlClient volume = new volumeControlClient("1", serialport);
-                volumeControlClient vol2 = new volumeControlClient("2", serialport);
+        //static void Main(string[] args)
+        //{
+        //    try
+        //    {
+        //        SerialPort serialport = new SerialPort("COM6", 115200);
+        //        serialport.Open();
+        //        volumeControlClient volume = new volumeControlClient("1", serialport);
+        //        volumeControlClient vol2 = new volumeControlClient("2", serialport);
 
-                string input;
+        //        string input;
 
-                while (true)
-                {
-                    input = serialport.ReadLine();
-                    System.Console.WriteLine("Input: " + input);
-                    volume.changeApplicationVolume(input, 10, "chrome.exe");
-                    vol2.changeSystemVolume(input, 10);
-                }
-            }
-            catch (Exception e)
-            {
-                System.Console.WriteLine(e);
-            }
-
-
+        //        while (true)
+        //        {
+        //            input = serialport.ReadLine();
+        //            System.Console.WriteLine("Input: " + input);
+        //            volume.changeApplicationVolume(input, 10, "chrome.exe");
+        //            vol2.changeSystemVolume(input, 10);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        System.Console.WriteLine(e);
+        //    }
 
 
-        }
+
+
+        //}
     }
 }

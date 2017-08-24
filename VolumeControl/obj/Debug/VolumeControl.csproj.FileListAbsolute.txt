@@ -6,3 +6,4 @@ e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\bin\Debug\V
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\bin\Debug\VolumeControl.pdb
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.exe
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.pdb
+e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.volumControlForm.resources
