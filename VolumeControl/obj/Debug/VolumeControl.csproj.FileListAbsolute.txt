@@ -1,4 +1,3 @@
-e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.csprojResolveAssemblyReference.cache
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.Properties.Resources.resources
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.csproj.GenerateResource.Cache
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\bin\Debug\VolumeControl.exe.config
@@ -7,3 +6,5 @@ e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\bin\Debug\V
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.exe
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.pdb
 e:\Documents\Visual Studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.volumControlForm.resources
+e:\documents\visual studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.csprojResolveAssemblyReference.cache
+e:\documents\visual studio 2017\Projects\VolumeControl\VolumeControl\obj\Debug\VolumeControl.csproj.CoreCompileInputs.cache
